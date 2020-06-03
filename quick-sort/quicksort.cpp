@@ -1,0 +1,57 @@
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+
+int partition(vector<int> &v, int left, int right) {
+	int pivot = left + (right - left) / 2;
+	swap(v[pivot], v[--right]);
+	pivot = right;
+	
+	while(true) {
+		while(v[left] < v[pivot]) {
+			++left;
+		}
+		while(left < right && v[right - 1] >= v[pivot]) {
+			--right;
+		}
+		if(left >= right) break;
+		swap(v[left], v[right-1]);
+	}
+	swap(v[left], v[pivot]);
+	return left;
+}
+
+
+void quiicksort(vector<int> &v, int left, int right) {
+	if(left + 1 >= right) return;
+	
+	int pivot = partition(v, left, right);
+
+	quiicksort(v, left, pivot);
+	quiicksort(v, pivot + 1, right);
+}
+
+void aToString(vector<int> &v) {
+	for(int i = 0; i < v.size(); i++) {
+		cout << v[i] << " ";
+	}
+	cout << endl;
+}
+
+
+
+int main() {
+	cout << "hello world" << endl;
+	vector<int> v;
+	v.push_back(5);
+	v.push_back(6);
+	v.push_back(2);
+	v.push_back(3);
+	v.push_back(9);
+	v.push_back(10);
+	quiicksort(v, 0, v.size());
+	aToString(v);
+	return 0;
+}
